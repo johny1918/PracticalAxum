@@ -4,5 +4,22 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-axum = "0.8.7"
+axum = { version = "0.8.7", features = ["macros", # macros - Enables route handler macros like [debug_handler]
+                                             "json"] }  # json - Adds support for serializing/deserializing JSON via Serde
+dotenvy = "0.15.7"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+sqlx = { version = "0.8.6", features = ["runtime-tokio", # Used for tokio
+                                                                "postgres",    # Used for sqlite
+                                                                "macros",      # compile-time query validation
+                                                                "uuid",        # if you use UUID
+                                                                "chrono"] }    # for date/time types
 tokio = {version = "1", features = ["full"]}
+tower-http = { version = "0.6.6", features = ["trace",                  # Logging all HTTP traffic
+                                                    "cors",                   # Adding gzip or brotli compression to resp
+                                                    "compression-full"] }     # Enabling CORS for frontend integration
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
+anyhow ="1"
+thiserror = "2.0.17"
+tokio-test = "0.4.4"
