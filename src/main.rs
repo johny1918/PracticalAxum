@@ -5,7 +5,7 @@ mod app;
 
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), std::io::Error> {
 
     let app = routes::routes();
 
@@ -17,7 +17,8 @@ async fn main() {
 
     //Starting axum server
     axum::serve(listener, app.into_make_service())
-        .await
-        .unwrap();
+        .await?;
+
+    Ok(())
 }
 
