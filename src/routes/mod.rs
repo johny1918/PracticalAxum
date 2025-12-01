@@ -17,6 +17,7 @@ impl Login {
 pub fn routes() -> Router {
     Router::new()
         .route("/", get(root_handle))
+        .route("/users/{user_id}", get(get_user_id))
         .route("/login", get(login_handle))
 
 }
@@ -31,4 +32,8 @@ async fn login_handle(Query(user): Query<Login>) -> Result<Json<String>, StatusC
         return Ok(Json(user.welcome()));
     }
     Err(StatusCode::UNAUTHORIZED)
+}
+
+async fn get_user_id(Path(user_id): Path<u64>) -> String {
+    format!("Fetching user profile for ID: {}", user_id)
 }
